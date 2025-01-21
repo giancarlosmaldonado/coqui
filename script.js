@@ -1,43 +1,51 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+const services = [
+    {
+        id: 1,
+        name: "Web Design",
+        description: "Custom web design services to elevate your brand.",
+        price: "$999"
+    },
+    {
+        id: 2,
+        name: "SEO Optimization",
+        description: "Improve your website's SEO to boost your online visibility.",
+        price: "$499"
+    },
+    {
+        id: 3,
+        name: "Digital Marketing",
+        description: "Comprehensive digital marketing services to increase your reach.",
+        price: "$750"
+    }
+];
 
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-
-        if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+function displayServices() {
+    const servicesContainer = document.getElementById('service-list');
+    servicesContainer.innerHTML = ''; // Clear loading message
+    services.forEach(service => {
+        const serviceElement = document.createElement('div');
+        serviceElement.innerHTML = `
+            <h3>${service.name}</h3>
+            <p>${service.description}</p>
+            <p>Price: ${service.price}</p>
+        `;
+        servicesContainer.appendChild(serviceElement);
     });
+}
+
+function populateBookingOptions() {
+    const serviceSelect = document.getElementById('service');
+    services.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.id;
+        option.textContent = service.name;
+        serviceSelect.appendChild(option);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    displayServices();
+    populateBookingOptions();
 });
 
-// Basic form validation
-document.querySelector('form').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent form from submitting until validation is complete
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-
-    if (!name || !email || !message) {
-        alert('Please fill out all fields.');
-        return;
-    }
-
-    if (!email.includes('@')) {
-        alert('Please enter a valid email address.');
-        return;
-    }
-
-    // If validation passes, simulate form submission here
-    console.log('Form submitted:', { name, email, message });
-    alert('Thank you for your message!');
-
-    // Optionally, clear the form or take other actions
-    document.querySelector('form').reset();
-});
-
+// Continue with existing script code...
